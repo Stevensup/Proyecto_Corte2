@@ -4,9 +4,8 @@ public class AplMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// LAURA
+		//LAURA
 	}
-	// camila
-	// esta es la rama de laura
+	//camila
 
 }
