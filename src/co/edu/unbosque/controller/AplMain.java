@@ -4,8 +4,8 @@ public class AplMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//LAURA
+		Controller control = new Controller();
+		control.start();
 	}
-	//camila
 
 }
