@@ -1,6 +1,9 @@
 package co.edu.unbosque.model;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class ContactoAmigo {
 
@@ -42,6 +45,46 @@ public class ContactoAmigo {
             return "AgendaAmigos [contactosAmigos=" + contactosAmigos + "]";
         }
     
+    }
+
+    public class AgendaAmigosDataIO {
+
+        public static void guardarEnArchivoData(ArrayList<ContactoAmigo> contactos) {
+            try {
+                FileOutputStream fos = new FileOutputStream("agenda_amigos.data");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(contactos);
+                oos.close();
+                fos.close();
+                System.out.println("La lista de contactos de amigos ha sido guardada en el archivo agenda_amigos.data.");
+            } catch (Exception e) {
+                System.out.println("Error al guardar la lista de contactos de amigos en el archivo agenda_amigos.data: " + e.getMessage());
+            }
+        }
+        
+    }
+
+    public class AgendaAmigosPropertiesIO {
+
+        public static void guardarEnArchivoProperties(ArrayList<ContactoAmigo> contactos) {
+            try {
+                Properties props = new Properties();
+                for (int i = 0; i < contactos.size(); i++) {
+                    ContactoAmigo contacto = contactos.get(i);
+                    props.setProperty("contacto_" + i + "_nombre", contacto.getNombre());
+                    props.setProperty("contacto_" + i + "_telefono", contacto.getTelefono());
+                    props.setProperty("contacto_" + i + "_correo", contacto.getCorreo());
+                    props.setProperty("contacto_" + i + "_pais", contacto.getPais());
+                }
+                FileOutputStream fos = new FileOutputStream("agenda_amigos.properties");
+                props.store(fos, "Lista de contactos de amigos");
+                fos.close();
+                System.out.println("La lista de contactos de amigos ha sido guardada en el archivo agenda_amigos.properties.");
+            } catch (Exception e) {
+                System.out.println("Error al guardar la lista de contactos de amigos en el archivo agenda_amigos.properties: " + e.getMessage());
+            }
+        }
+        
     }
 
     public String getNombre() {
