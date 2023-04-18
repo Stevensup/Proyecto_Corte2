@@ -2,67 +2,71 @@ package co.edu.unbosque.controller;
 
 import java.util.Scanner;
 
-import co.edu.unbosque.model.Crud;
+import co.edu.unbosque.model.ContactoAmigo;
+import co.edu.unbosque.model.ContactoTrabajo;
+
 
 public class Controller {
 
     private Scanner scanner;
-    private Crud crud;
+    private ContactoAmigo Camigo;
+    private ContactoTrabajo Ctrabajo;
 
     public Controller() {
         scanner = new Scanner(System.in);
-        crud = new Crud();
+        Camigo = new ContactoAmigo(null, null, null, null);
+        Ctrabajo = new ContactoTrabajo(null, null, null, null);
     }
 
     public void start() {
         int option = 0;
         do {
             System.out.println("-------------------Escoge una opcion:");
-            System.out.println("-------------------1. Registrar");
-            System.out.println("-------------------2. Buscar");
-            System.out.println("-------------------3. Listar");
-            System.out.println("-------------------4. Modificar");
-            System.out.println("-------------------5. Borrar");
-            System.out.println("-------------------6. Salir");
+            System.out.println("-------------------1. Ingresar Agenda Contactos Amigos: ");
+            System.out.println("-------------------2. Ingresar Agenda Contactos Trabajo");
+            System.out.println("-------------------3. Salir");
             System.out.print("-------------------Ingrese la opcion: ");
             option = scanner.nextInt();
             scanner.nextLine(); // consumir el salto de línea pendiente
 
             switch (option) {
                 case 1:
-                    System.out.println("Ingrese los datos: ");
+                    System.out.println("Ingrese los datos del contacto amigo: ");
 
                     System.out.print("Nombre: ");
-                    String nombre = scanner.nextLine();
+                    String nombreAmigo = scanner.nextLine();
+
+                    System.out.print("Telefono: ");
+                    String telefonoAmigo = scanner.nextLine();
+
+                    System.out.print("Correo: ");
+                    String correoAmigo = scanner.nextLine();
 
                     System.out.print("Pais: ");
-                    String pais = scanner.nextLine();
+                    String paisAmigo = scanner.nextLine();
 
-                    System.out.print("telefono: ");
-                    String telefono = scanner.nextLine();
 
-                    System.out.print("correo: ");
-                    int correo = scanner.nextInt();
-
-                    scanner.nextLine(); // consumir el salto de línea pendiente
-
-                    // Pokemon nuevoPokemon = new Pokemon(nombre, pais, telefono, correo);
-                    // crud.registerNewPokemon(nuevoPokemon);
-                    break;
+                    Camigo.agregarContacto(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
                     break;
                 case 2:
-                    System.out.print("Ingrese el nombre del pokemon a buscar: ");
+                    System.out.println("Ingrese los datos del contacto de trabajo: ");
+
+                    System.out.print("Nombre: ");
+                    String nombreTrabajo = scanner.nextLine();
+
+                    System.out.print("Telefono: ");
+                    String telefonoTrabajo = scanner.nextLine();
+
+                    System.out.print("Correo: ");
+                    String correoTrabajo = scanner.nextLine();
+
+                    System.out.print("Pais: ");
+                    String paisTrabajo = scanner.nextLine();
+
+
+                    Ctrabajo.agregarContactoTrabajo(nombreTrabajo, telefonoTrabajo, correoTrabajo, paisTrabajo);
                     break;
                 case 3:
-                    System.out.print("Ingrese el tipo de Pokemon: ");
-                    break;
-                case 4:
-                    System.out.print("Ingrese el nombre del pokemon a eliminar: ");
-                    break;
-                case 5:
-                    System.out.println("Hasta pronto...");
-                    break;
-                case 6:
                     System.out.println("Hasta pronto...");
                     break;
                 default:
@@ -70,7 +74,8 @@ public class Controller {
                     break;
             }
 
-        } while (option != 5);
+        } while (option != 3);
     }
-
 }
+
+
