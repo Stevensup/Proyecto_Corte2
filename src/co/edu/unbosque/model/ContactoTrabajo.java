@@ -1,5 +1,10 @@
 package co.edu.unbosque.model;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Properties;
+
 public class ContactoTrabajo {
 
     private String nombre;
