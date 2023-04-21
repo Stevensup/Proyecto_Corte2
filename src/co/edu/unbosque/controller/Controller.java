@@ -1,21 +1,22 @@
 package co.edu.unbosque.controller;
 
+import co.edu.unbosque.model.ContactoAmigo;
+// import co.edu.unbosque.model.ContactoTrabajo;
 import java.util.Scanner;
 
-import co.edu.unbosque.model.ContactoAmigo;
-import co.edu.unbosque.model.ContactoTrabajo;
 
 
 public class Controller {
 
     private Scanner scanner;
     private ContactoAmigo Camigo;
-    private ContactoTrabajo Ctrabajo;
+    // private ContactoTrabajo Ctrabajo;
 
     public Controller() {
         scanner = new Scanner(System.in);
         Camigo = new ContactoAmigo(null, null, null, null);
-        Ctrabajo = new ContactoTrabajo(null, null, null, null);
+        // Ctrabajo = new ContactoTrabajo(null, null, null, null);
+       
     }
 
     public void start() {
@@ -45,8 +46,9 @@ public class Controller {
                     System.out.print("Pais: ");
                     String paisAmigo = scanner.nextLine();
 
-
                     Camigo.agregarContacto(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
+
+                    
                     break;
                 case 2:
                     System.out.println("Ingrese los datos del contacto de trabajo: ");
@@ -64,7 +66,7 @@ public class Controller {
                     String paisTrabajo = scanner.nextLine();
 
 
-                    Ctrabajo.agregarContactoTrabajo(nombreTrabajo, telefonoTrabajo, correoTrabajo, paisTrabajo);
+                    // Ctrabajo.agregarContactoTrabajo(nombreTrabajo, telefonoTrabajo, correoTrabajo, paisTrabajo);
                     break;
                 case 3:
                     System.out.println("Hasta pronto...");

@@ -1,11 +1,15 @@
 package co.edu.unbosque.model;
 
+import co.edu.unbosque.model.AgendaAmigos;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Properties;
+import java.io.Serializable;
 
-public class ContactoAmigo {
+
+public class ContactoAmigo implements Serializable {
 
     private String nombre;
     private String telefono;
@@ -19,81 +23,37 @@ public class ContactoAmigo {
         this.pais = pais;
     }
 
-    public class AgendaAmigos {
-
-        private ArrayList<ContactoAmigo> contactosAmigos;
-
-        public AgendaAmigos() {
-            contactosAmigos = new ArrayList<ContactoAmigo>();
+    public void agregarContacto(String nombreAmigo, String telefonoAmigo, String correoAmigo, String paisAmigo) {
+        AgendaAmigos agenda = leerDeArchivoData();
+        if (agenda == null) {
+            agenda = new AgendaAmigos();
         }
-
-        public void agregarContacto(String nombre, String telefono, String correo, String pais) {
-            ContactoAmigo nuevoContacto = new ContactoAmigo(nombre, telefono, correo, pais);
-            contactosAmigos.add(nuevoContacto);
-        }
-
-        public ArrayList<ContactoAmigo> getContactosAmigos() {
-            return contactosAmigos;
-        }
-
-        public void setContactosAmigos(ArrayList<ContactoAmigo> contactosAmigos) {
-            this.contactosAmigos = contactosAmigos;
-        }
-
-        @Override
-        public String toString() {
-            return "AgendaAmigos [contactosAmigos=" + contactosAmigos + "]";
-        }
-
+        ContactoAmigo nuevoContacto = new ContactoAmigo(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
+        agenda.getContactosAmigos().add(nuevoContacto);
+        guardarEnArchivoData(agenda);
+        System.out.println(agenda.toString());
     }
-
-    public class AgendaAmigosDataIO {
-
-        public static void guardarEnArchivoData(ArrayList<ContactoAmigo> contactos) {
-            try {
-                FileOutputStream fos = new FileOutputStream("agenda_amigos.data");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(contactos);
-                oos.close();
-                fos.close();
-                System.out
-                        .println("La lista de contactos de amigos ha sido guardada en el archivo agenda_amigos.data.");
-            } catch (Exception e) {
-                System.out.println("Error al guardar la lista de contactos de amigos en el archivo agenda_amigos.data: "
-                        + e.getMessage());
-            }
+    
+    public AgendaAmigos leerDeArchivoData() {
+        AgendaAmigos agenda = null;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("amigos.data"))) {
+            agenda = (AgendaAmigos) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer la lista de contactos de amigos del archivo amigos.data: " + e.getMessage());
         }
-
+        return agenda;
     }
-
-    public class AgendaAmigosPropertiesIO {
-
-        public static void guardarEnArchivoProperties(ArrayList<ContactoAmigo> contactos) {
-            try {
-                Properties props = new Properties();
-                for (int i = 0; i < contactos.size(); i++) {
-                    ContactoAmigo contacto = contactos.get(i);
-                    props.setProperty("contacto_" + i + "_nombre", contacto.getNombre());
-                    props.setProperty("contacto_" + i + "_telefono", contacto.getTelefono());
-                    props.setProperty("contacto_" + i + "_correo", contacto.getCorreo());
-                    props.setProperty("contacto_" + i + "_pais", contacto.getPais());
-                }
-                FileOutputStream fos = new FileOutputStream("agenda_amigos.properties");
-                props.store(fos, "Lista de contactos de amigos");
-                fos.close();
-                System.out.println(
-                        "La lista de contactos de amigos ha sido guardada en el archivo agenda_amigos.properties.");
-            } catch (Exception e) {
-                System.out.println(
-                        "Error al guardar la lista de contactos de amigos en el archivo agenda_amigos.properties: "
-                                + e.getMessage());
-            }
+    
+    public void guardarEnArchivoData(AgendaAmigos agenda) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("amigos.data"))) {
+            oos.writeObject(agenda);
+        } catch (IOException e) {
+            System.out.println("Error al guardar la lista de contactos de amigos en el archivo amigos.data: " + e.getMessage());
         }
-
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -101,7 +61,7 @@ public class ContactoAmigo {
     }
 
     public String getTelefono() {
-        return telefono;
+        return this.telefono;
     }
 
     public void setTelefono(String telefono) {
@@ -109,7 +69,7 @@ public class ContactoAmigo {
     }
 
     public String getCorreo() {
-        return correo;
+        return this.correo;
     }
 
     public void setCorreo(String correo) {
@@ -117,19 +77,12 @@ public class ContactoAmigo {
     }
 
     public String getPais() {
-        return pais;
+        return this.pais;
     }
 
     public void setPais(String pais) {
         this.pais = pais;
     }
 
-    @Override
-    public String toString() {
-        return "ContactoAmigo [nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + ", pais=" + pais
-                + "]";
-    }
-
-    public void agregarContacto(String nombreAmigo, String telefonoAmigo, String correoAmigo, String paisAmigo) {
-    }
 }
+
