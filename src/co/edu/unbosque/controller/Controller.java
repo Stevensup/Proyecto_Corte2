@@ -17,7 +17,7 @@ public class Controller {
        
     }
     /**
-	 * Método para listar el menú en consola y seleccionar el algoritmo de ordenamiento a ejecutar.
+	 * Método start para listar el menú en consola y seleccionar el algoritmo de ordenamiento a ejecutar.
 	 */
     
     public void start() {
