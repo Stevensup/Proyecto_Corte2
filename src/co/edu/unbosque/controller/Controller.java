@@ -4,10 +4,6 @@ import co.edu.unbosque.model.ContactoAmigo;
 import java.util.Scanner;
 // import co.edu.unbosque.model.ContactoTrabajo;
 
-/**
-	 * Clase xxx
-	 */
-
 public class Controller {
 
     private Scanner scanner;
