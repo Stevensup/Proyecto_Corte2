@@ -38,13 +38,36 @@ public class Controller {
     
                     System.out.print("Nombre: ");
                     String nombreAmigo = scanner.nextLine();
-    
+                    // Verificar si el nombre contiene caracteres no permitidos
+                    if (nombreAmigo.matches(".*\\d.*") || nombreAmigo.matches(".*[^a-zA-Z\\s].*")) {
+                        System.out.println("El nombre solo puede contener letras y espacios en blanco. Intente de nuevo.");
+                        return;
+                    }
+                    // Verificar si el telefono contiene letras o caracteres no permitidos
                     System.out.print("Telefono: ");
-                    String telefonoAmigo = scanner.nextLine();
+                    String numeroseparado = "";
+                    boolean esNumerico = false;
+                    while (!esNumerico) {
+                        numeroseparado = scanner.nextLine();
+                        if (numeroseparado.matches("[0-9]+")) {
+                            esNumerico = true;
+                        } else {
+                            System.out.println("Por favor ingrese solo numeros.");
+                            System.out.print("Telefono: ");
+                        }
+                    }
+                    String telefonoAmigo = numeroseparado.substring(0, 3) + "-" + numeroseparado.substring(3, 6) + "-" + numeroseparado.substring(6,9);
+                    System.out.println(telefonoAmigo);
     
+                    //verificar que el correo cuente con el @
                     System.out.print("Correo: ");
                     String correoAmigo = scanner.nextLine();
-    
+                    while (!correoAmigo.contains("@")) {
+                        System.out.println("El correo electrónico debe contener el símbolo '@'. Por favor, ingrese un correo válido:");
+                        correoAmigo = scanner.nextLine();
+}
+
+                    System.out.println("Países permitidos: " + Camigo.paises);
                     System.out.print("Pais: ");
                     String paisAmigo = scanner.nextLine();
     

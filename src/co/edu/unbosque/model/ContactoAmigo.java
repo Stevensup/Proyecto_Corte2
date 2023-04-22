@@ -1,12 +1,12 @@
 package co.edu.unbosque.model;
 
-import co.edu.unbosque.model.AgendaAmigos;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -17,6 +17,8 @@ public class ContactoAmigo implements Serializable {
     private String correo;
     private String pais;
     private List<ContactoAmigo> contactos;
+    public static final List<String> paises = Arrays.asList("Colombia", "Venezuela", "México", "Argentina", "Chile", "Perú");
+
 
     public ContactoAmigo(String nombre, String telefono, String correo, String pais) {
         this.nombre = nombre;
@@ -31,10 +33,14 @@ public class ContactoAmigo implements Serializable {
         if (agenda == null) {
             agenda = new AgendaAmigos();
         }
-        ContactoAmigo nuevoContacto = new ContactoAmigo(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
-        agenda.getContactosAmigos().add(nuevoContacto);
-        guardarEnArchivoData(agenda);
-        System.out.println(agenda.toString());
+        if (paisAmigo.equalsIgnoreCase("colombia") || paisAmigo.equalsIgnoreCase("venezuela") || paisAmigo.equalsIgnoreCase("ecuador")) {
+            ContactoAmigo nuevoContacto = new ContactoAmigo(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
+            agenda.getContactosAmigos().add(nuevoContacto);
+            guardarEnArchivoData(agenda);
+            System.out.println("Contacto agregado exitosamente.");
+        } else {
+            System.out.println("Pais no valido. Por favor ingrese un pais valido: ");
+        }
     }
 
     public ContactoAmigo buscarContacto(String nombre) {
