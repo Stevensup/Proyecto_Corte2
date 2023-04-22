@@ -10,7 +10,11 @@ public class Controller {
     private ContactoAmigo Camigo;
     // private ContactoTrabajo Ctrabajo;
 
-    public Controller() {
+    /**
+      * Constructor de la clase Controller, inicializa los modelos a utilizar.
+      */
+	
+	public Controller() {
         scanner = new Scanner(System.in);
         Camigo = new ContactoAmigo(null, null, null, null);
         // Ctrabajo = new ContactoTrabajo(null, null, null, null);
