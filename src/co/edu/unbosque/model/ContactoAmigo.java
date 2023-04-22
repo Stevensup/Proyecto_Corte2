@@ -35,12 +35,16 @@ public class ContactoAmigo implements Serializable {
         }
         String[] paisesValidos = {"colombia", "venezuela", "méxico", "argentina", "chile", "perú"};
         if (Arrays.asList(paisesValidos).contains(paisAmigo.toLowerCase())) {
-            ContactoAmigo nuevoContacto = new ContactoAmigo(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
-            agenda.getContactosAmigos().add(nuevoContacto);
-            guardarEnArchivoData(agenda);
-            System.out.println("Contacto agregado exitosamente.");
+            if (agenda.getContactosAmigos().size() < 15) {
+                ContactoAmigo nuevoContacto = new ContactoAmigo(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
+                agenda.getContactosAmigos().add(nuevoContacto);
+                guardarEnArchivoData(agenda);
+                System.out.println("Contacto agregado exitosamente.");
+            } else {
+                System.out.println("No es posible agregar más contactos amigos. La agenda ya está llena.");
+            }
         } else {
-            System.out.println("Pais no valido. Por favor ingrese un pais valido: ");
+            System.out.println("País no válido. Por favor ingrese un país válido: ");
         }
     }
 
@@ -62,30 +66,38 @@ public class ContactoAmigo implements Serializable {
             System.out.println("No hay contactos en la agenda.");
         } else {
             List<ContactoAmigo> contactos = agenda.getContactosAmigos();
+            int cantidadContactos = contactos.size();
+            double porcentajeContactos = ((double) cantidadContactos / 15) * 100;
             System.out.println("Lista de contactos:");
-            for (int i = 0; i < contactos.size(); i++) {
+            for (int i = 0; i < cantidadContactos; i++) {
                 System.out.println((i + 1) + ". " + contactos.get(i).toString());
             }
-            System.out.println("Cantidad de contactos: " + contactos.size());
+            System.out.println("Cantidad de contactos: " + cantidadContactos);
+            System.out.println("Porcentaje de contactos agregados: " + porcentajeContactos + "%");
         }
     }
     
     public void editarContacto(String nombre, String telefono, String correo, String pais) {
         AgendaAmigos agenda = leerDeArchivoData();
-        if (agenda != null) {
-            for (ContactoAmigo c : agenda.getContactosAmigos()) {
+        if (agenda != null && agenda.getContactosAmigos() != null) {
+            for (int i = 0; i < agenda.getContactosAmigos().size(); i++) {
+                ContactoAmigo c = agenda.getContactosAmigos().get(i);
                 if (c.getNombre().equalsIgnoreCase(nombre)) {
+                    c.setNombre(nombre);
                     c.setTelefono(telefono);
                     c.setCorreo(correo);
                     c.setPais(pais);
                     guardarEnArchivoData(agenda);
-                    System.out.println("Contacto editado exitosamente.");
+                    System.out.println("Contacto amigo editado exitosamente.");
                     return;
                 }
             }
             System.out.println("No se encontró ningún contacto con el nombre ingresado.");
+        } else {
+            System.out.println("No se pudo leer la lista de contactos de amigos del archivo amigos.data.");
         }
-    }   
+    }
+     
 
     public boolean eliminarContacto(String nombre) {
         AgendaAmigos agenda = leerDeArchivoData();
