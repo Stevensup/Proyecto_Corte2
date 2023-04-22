@@ -39,9 +39,9 @@ public class Controller {
                     System.out.print("Nombre: ");
                     String nombreAmigo = scanner.nextLine();
                     // Verificar si el nombre contiene caracteres no permitidos
-                    if (nombreAmigo.matches(".*\\d.*") || nombreAmigo.matches(".*[^a-zA-Z\\s].*")) {
+                    while (nombreAmigo.matches(".*\\d.*") || nombreAmigo.matches(".*[^a-zA-Z\\s].*")) {
                         System.out.println("El nombre solo puede contener letras y espacios en blanco. Intente de nuevo.");
-                        return;
+                        nombreAmigo = scanner.nextLine();
                     }
                     // Verificar si el telefono contiene letras o caracteres no permitidos
                     System.out.print("Telefono: ");
@@ -65,11 +65,20 @@ public class Controller {
                     while (!correoAmigo.contains("@")) {
                         System.out.println("El correo electrónico debe contener el símbolo '@'. Por favor, ingrese un correo válido:");
                         correoAmigo = scanner.nextLine();
-}
+                    }
 
                     System.out.println("Países permitidos: " + Camigo.paises);
-                    System.out.print("Pais: ");
-                    String paisAmigo = scanner.nextLine();
+                    String paisAmigo = null;
+                    while (paisAmigo == null) {
+                        System.out.print("Pais: ");
+                        String input = scanner.nextLine();
+                        if (Camigo.paises.contains(input)) {
+                            paisAmigo = input;
+                        } else {
+                            System.out.println("Pais no valido. Por favor ingrese un pais valido.");
+                        }
+                    }
+
     
                     Camigo.agregarContacto(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
                     break;
