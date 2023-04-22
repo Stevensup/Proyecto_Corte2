@@ -19,6 +19,7 @@ public class AgendaAmigos implements Serializable {
     public void setContactosAmigos(ArrayList<ContactoAmigo> contactosAmigos) {
         this.contactosAmigos = contactosAmigos;
     }
+    
 
     @Override
     public String toString() {

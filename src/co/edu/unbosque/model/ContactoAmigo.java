@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 
 
 public class ContactoAmigo implements Serializable {
@@ -15,12 +16,14 @@ public class ContactoAmigo implements Serializable {
     private String telefono;
     private String correo;
     private String pais;
+    private List<ContactoAmigo> contactos;
 
     public ContactoAmigo(String nombre, String telefono, String correo, String pais) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.pais = pais;
+        this.contactos = contactos;
     }
 
     public void agregarContacto(String nombreAmigo, String telefonoAmigo, String correoAmigo, String paisAmigo) {
@@ -33,6 +36,47 @@ public class ContactoAmigo implements Serializable {
         guardarEnArchivoData(agenda);
         System.out.println(agenda.toString());
     }
+
+    public ContactoAmigo buscarContacto(String nombre) {
+        AgendaAmigos agenda = leerDeArchivoData();
+        if (agenda != null) {
+            for (ContactoAmigo c : agenda.getContactosAmigos()) {
+                if (c.getNombre().equalsIgnoreCase(nombre)) {
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void listarContactos() {
+        System.out.println("Lista de contactos amigos:");
+        AgendaAmigos agenda = leerDeArchivoData();
+        if (agenda != null) {
+            for (ContactoAmigo contacto : agenda.getContactosAmigos()) {
+                System.out.println(contacto.toString());
+            }
+        } else {
+            System.out.println("La lista de contactos de amigos está vacía.");
+        }
+    }
+    
+    public void editarContacto(String nombre, String telefono, String correo, String pais) {
+        AgendaAmigos agenda = leerDeArchivoData();
+        if (agenda != null) {
+            for (ContactoAmigo c : agenda.getContactosAmigos()) {
+                if (c.getNombre().equalsIgnoreCase(nombre)) {
+                    c.setTelefono(telefono);
+                    c.setCorreo(correo);
+                    c.setPais(pais);
+                    guardarEnArchivoData(agenda);
+                    System.out.println("Contacto editado exitosamente.");
+                    return;
+                }
+            }
+            System.out.println("No se encontró ningún contacto con el nombre ingresado.");
+        }
+    }   
     
     public AgendaAmigos leerDeArchivoData() {
         AgendaAmigos agenda = null;
@@ -83,6 +127,11 @@ public class ContactoAmigo implements Serializable {
     public void setPais(String pais) {
         this.pais = pais;
     }
+
+    @Override
+        public String toString() {
+            return "Nombre: " + nombre + ", Teléfono: " + telefono + ", Correo: " + correo + ", País: " + pais;
+        }
 
 }
 
