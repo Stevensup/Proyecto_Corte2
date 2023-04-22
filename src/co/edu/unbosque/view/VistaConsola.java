@@ -3,8 +3,9 @@ package co.edu.unbosque.view;
 import java.util.Scanner;
 
  /**
-     * Esta clase se encarga de mostrar la interfaz de usuario por consola y de obtener la entrada del usuario.
+     * Esta clase representa la vista de consola de la aplicación. Permite mostrar mensajes al usuario y leer datos desde la entrada estándar.
      */
+
 public class VistaConsola{
 
 	private Scanner leer;
