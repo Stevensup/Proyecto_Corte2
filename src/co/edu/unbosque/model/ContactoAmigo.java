@@ -33,7 +33,8 @@ public class ContactoAmigo implements Serializable {
         if (agenda == null) {
             agenda = new AgendaAmigos();
         }
-        if (paisAmigo.equalsIgnoreCase("colombia") || paisAmigo.equalsIgnoreCase("venezuela") || paisAmigo.equalsIgnoreCase("ecuador")) {
+        String[] paisesValidos = {"colombia", "venezuela", "méxico", "argentina", "chile", "perú"};
+        if (Arrays.asList(paisesValidos).contains(paisAmigo.toLowerCase())) {
             ContactoAmigo nuevoContacto = new ContactoAmigo(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
             agenda.getContactosAmigos().add(nuevoContacto);
             guardarEnArchivoData(agenda);
@@ -56,14 +57,16 @@ public class ContactoAmigo implements Serializable {
     }
 
     public void listarContactos() {
-        System.out.println("Lista de contactos amigos:");
         AgendaAmigos agenda = leerDeArchivoData();
-        if (agenda != null) {
-            for (ContactoAmigo contacto : agenda.getContactosAmigos()) {
-                System.out.println(contacto.toString());
-            }
+        if (agenda == null || agenda.getContactosAmigos().isEmpty()) {
+            System.out.println("No hay contactos en la agenda.");
         } else {
-            System.out.println("La lista de contactos de amigos está vacía.");
+            List<ContactoAmigo> contactos = agenda.getContactosAmigos();
+            System.out.println("Lista de contactos:");
+            for (int i = 0; i < contactos.size(); i++) {
+                System.out.println((i + 1) + ". " + contactos.get(i).toString());
+            }
+            System.out.println("Cantidad de contactos: " + contactos.size());
         }
     }
     
@@ -83,7 +86,24 @@ public class ContactoAmigo implements Serializable {
             System.out.println("No se encontró ningún contacto con el nombre ingresado.");
         }
     }   
-    
+
+    public boolean eliminarContacto(String nombre) {
+        AgendaAmigos agenda = leerDeArchivoData();
+        if (agenda != null) {
+            for (ContactoAmigo c : agenda.getContactosAmigos()) {
+                if (c.getNombre().equalsIgnoreCase(nombre)) {
+                    agenda.getContactosAmigos().remove(c);
+                    guardarEnArchivoData(agenda);
+                    System.out.println("Contacto eliminado exitosamente.");
+                    return true;
+                }
+            }
+            System.out.println("No se encontró ningún contacto con el nombre ingresado.");
+        }
+        return false;
+    }
+
+
     public AgendaAmigos leerDeArchivoData() {
         AgendaAmigos agenda = null;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("amigos.data"))) {

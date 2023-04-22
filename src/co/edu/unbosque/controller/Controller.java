@@ -28,7 +28,8 @@ public class Controller {
             System.out.println("-------------------2. Ingresar Agenda Contactos Trabajo");
             System.out.println("-------------------3. Buscar y editar contacto amigo");
             System.out.println("-------------------4. Listar contactos");
-            System.out.println("-------------------5. Salir");
+            System.out.println("-------------------5. Eliminar contacto");
+            System.out.println("-------------------6. Salir");
             System.out.print("-------------------Ingrese la opcion: ");
             option = scanner.nextInt();
             scanner.nextLine(); // consumir el salto de línea pendiente
@@ -133,6 +134,16 @@ public class Controller {
                     Camigo.listarContactos();
                     break;
                 case 5:
+                        System.out.print("Ingrese el nombre del contacto a eliminar: ");
+                        String nombre = scanner.nextLine();
+                        boolean eliminado = Camigo.eliminarContacto(nombre);
+                        if (eliminado) {
+                            System.out.println("El contacto " + nombre + " ha sido eliminado correctamente.");
+                        } else {
+                            System.out.println("No se pudo eliminar el contacto " + nombre + ". Verifique que el nombre sea correcto.");
+                        }
+                break;
+                case 6:
                     System.out.println("Hasta pronto...");
                     break;
                 default:
