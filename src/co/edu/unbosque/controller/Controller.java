@@ -36,7 +36,7 @@ public class Controller {
             switch (option) {
                 case 1:
                     System.out.println("Ingrese los datos del contacto amigo: ");
-    
+	
                     System.out.print("Nombre: ");
                     String nombreAmigo = scanner.nextLine();
                     // Verificar si el nombre contiene caracteres no permitidos
@@ -67,7 +67,7 @@ public class Controller {
                         System.out.println("El correo electrónico debe contener el símbolo '@'. Por favor, ingrese un correo válido:");
                         correoAmigo = scanner.nextLine();
                     }
-
+		
                     System.out.println("Países permitidos: " + Camigo.paises);
                     String paisAmigo = null;
                     while (paisAmigo == null) {
