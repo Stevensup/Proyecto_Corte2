@@ -3,7 +3,7 @@ package co.edu.unbosque.controller;
 public class AplMain {
 
 	/**
-	 * Método Main para iniciar el programa.
+	 * Método AplMain para iniciar el programa.
 	 * @param args
 	 */
 	
