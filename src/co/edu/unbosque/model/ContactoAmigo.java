@@ -68,7 +68,6 @@ public class ContactoAmigo implements Serializable {
             List<ContactoAmigo> contactos = agenda.getContactosAmigos();
             int cantidadContactos = contactos.size();
             double porcentajeContactos = ((double) cantidadContactos / 15) * 100;
-            System.out.println("Lista de contactos:");
             for (int i = 0; i < cantidadContactos; i++) {
                 System.out.println((i + 1) + ". " + contactos.get(i).toString());
             }

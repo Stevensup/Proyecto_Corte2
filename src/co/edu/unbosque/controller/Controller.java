@@ -1,6 +1,8 @@
 package co.edu.unbosque.controller;
 
 import co.edu.unbosque.model.ContactoAmigo;
+import co.edu.unbosque.model.ContactoTrabajo;
+
 import java.util.Scanner;
 // import co.edu.unbosque.model.ContactoTrabajo;
 
@@ -8,12 +10,12 @@ public class Controller {
 
     private Scanner scanner;
     private ContactoAmigo Camigo;
-    // private ContactoTrabajo Ctrabajo;
+    private ContactoTrabajo Ctrabajo;
 
     public Controller() {
         scanner = new Scanner(System.in);
         Camigo = new ContactoAmigo(null, null, null, null);
-        // Ctrabajo = new ContactoTrabajo(null, null, null, null);
+        Ctrabajo = new ContactoTrabajo(null, null, null, null, null);
        
     }
     /**
@@ -86,22 +88,62 @@ public class Controller {
                     break;
                 case 2:
                     System.out.println("Ingrese los datos del contacto de trabajo: ");
-    
+                
                     System.out.print("Nombre: ");
                     String nombreTrabajo = scanner.nextLine();
-    
+                    // Verificar si el nombre contiene caracteres no permitidos
+                    while (nombreTrabajo.matches(".*\\d.*") || nombreTrabajo.matches(".*[^a-zA-Z\\s].*")) {
+                        System.out.println("El nombre solo puede contener letras y espacios en blanco. Intente de nuevo.");
+                        nombreTrabajo = scanner.nextLine();
+                    }
+                    
+                    System.out.print("Empresa: ");
+                    String nombreEmpresa = scanner.nextLine();
+                    // Verificar si el nombre contiene caracteres no permitidos
+                    while (nombreEmpresa.matches(".*\\d.*") || nombreEmpresa.matches(".*[^a-zA-Z\\s].*")) {
+                        System.out.println("El nombre solo puede contener letras y espacios en blanco. Intente de nuevo.");
+                        nombreEmpresa = scanner.nextLine();
+                    }
+                    // Verificar si el telefono contiene letras o caracteres no permitidos
                     System.out.print("Telefono: ");
-                    String telefonoTrabajo = scanner.nextLine();
-    
+                    String numeroseparadoTrabajo = "";
+                    boolean esNumericoTrabajo = false;
+                    while (!esNumericoTrabajo) {
+                        numeroseparadoTrabajo = scanner.nextLine();
+                        if (numeroseparadoTrabajo.matches("[0-9]+")) {
+                            esNumericoTrabajo = true;
+                        } else {
+                            System.out.println("Por favor ingrese solo numeros.");
+                            System.out.print("Telefono: ");
+                        }
+                    }
+                    String telefonoTrabajo = numeroseparadoTrabajo.substring(0, 3) + "-" + numeroseparadoTrabajo.substring(3, 6) + "-" + numeroseparadoTrabajo.substring(6,9);
+                    System.out.println(telefonoTrabajo);
+                
+                    //verificar que el correo cuente con el @
                     System.out.print("Correo: ");
                     String correoTrabajo = scanner.nextLine();
-    
-                    System.out.print("Pais: ");
-                    String paisTrabajo = scanner.nextLine();
-    
-    
-                    // Ctrabajo.agregarContactoTrabajo(nombreTrabajo, telefonoTrabajo, correoTrabajo, paisTrabajo);
+                    while (!correoTrabajo.contains("@")) {
+                        System.out.println("El correo electrónico debe contener el símbolo '@'. Por favor, ingrese un correo válido:");
+                        correoTrabajo = scanner.nextLine();
+                    }
+                
+                    System.out.println("Países permitidos: " + Ctrabajo.paises);
+                    String paisTrabajo = null;
+                    while (paisTrabajo == null) {
+                        System.out.print("Pais: ");
+                        String input = scanner.nextLine();
+                        if (Ctrabajo.paises.contains(input)) {
+                            paisTrabajo = input;
+                        } else {
+                            System.out.println("Pais no valido. Por favor ingrese un pais valido.");
+                        }
+                    }
+                
+                    Ctrabajo.agregarContactoTrabajo(nombreTrabajo, nombreEmpresa, telefonoTrabajo, correoTrabajo, paisTrabajo);
+                    // Persistir información en archivo binario
                     break;
+                
                 case 3:
                     System.out.print("Ingrese el nombre del contacto amigo a buscar y editar: ");
                     String nombreBuscar = scanner.nextLine();
@@ -132,17 +174,42 @@ public class Controller {
                 case 4:
                     System.out.println("Lista de contactos: ");
                     Camigo.listarContactos();
+                    System.out.println("------------------------------");
+                    System.out.println("Lista de contactos trabajo : ");
+                    Ctrabajo.listarContactosTrabajo();
                     break;
-                case 5:
-                        System.out.print("Ingrese el nombre del contacto a eliminar: ");
-                        String nombre = scanner.nextLine();
-                        boolean eliminado = Camigo.eliminarContacto(nombre);
-                        if (eliminado) {
-                            System.out.println("El contacto " + nombre + " ha sido eliminado correctamente.");
-                        } else {
-                            System.out.println("No se pudo eliminar el contacto " + nombre + ". Verifique que el nombre sea correcto.");
-                        }
-                break;
+                    case 5:
+                    System.out.println("¿Qué tipo de contacto desea eliminar?");
+                    System.out.println("1. Contacto Amigo");
+                    System.out.println("2. Contacto Trabajo");
+                    int opcion = scanner.nextInt();
+                    scanner.nextLine(); // consume the newline character
+                    switch (opcion) {
+                        case 1:
+                            System.out.print("Ingrese el nombre del contacto a eliminar: ");
+                            String nombre = scanner.nextLine();
+                            boolean eliminadoAmigo = Camigo.eliminarContacto(nombre);
+                            if (eliminadoAmigo) {
+                                System.out.println("El contacto " + nombre + " ha sido eliminado correctamente.");
+                            } else {
+                                System.out.println("No se pudo eliminar el contacto " + nombre + ". Verifique que el nombre sea correcto.");
+                            }
+                            break;
+                        case 2:
+                            System.out.print("Ingrese el nombre del contacto trabajo a eliminar: ");
+                            String nombretrabajo = scanner.nextLine();
+                            boolean eliminadoTrabajo = Ctrabajo.eliminarContactoTrabajo(nombretrabajo);
+                            if (eliminadoTrabajo) {
+                                System.out.println("El contacto trabajo (empresa) " + nombretrabajo + " ha sido eliminado correctamente.");
+                            } else {
+                                System.out.println("No se pudo eliminar el contacto trabajo " + nombretrabajo + ". Verifique que el nombre sea correcto.");
+                            }
+                            break;
+                        default:
+                            System.out.println("Opción inválida.");
+                            break;
+                    }
+                    break;
                 case 6:
                     System.out.println("Hasta pronto...");
                     break;
