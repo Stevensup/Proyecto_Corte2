@@ -4,7 +4,9 @@ import co.edu.unbosque.model.ContactoAmigo;
 import java.util.Scanner;
 // import co.edu.unbosque.model.ContactoTrabajo;
 
-
+/**
+	 * Clase xxx
+	 */
 
 public class Controller {
 
@@ -18,7 +20,10 @@ public class Controller {
         // Ctrabajo = new ContactoTrabajo(null, null, null, null);
        
     }
-
+    /**
+	 * Método para listar el menú en consola y seleccionar el algoritmo de ordenamiento a ejecutar.
+	 */
+    
     public void start() {
         int option = 0;
         do {
