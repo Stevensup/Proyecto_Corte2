@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"Agenda_Rosita","l":"co.edu.unbosque.controller"},{"m":"Agenda_Rosita","l":"co.edu.unbosque.model"},{"m":"Agenda_Rosita","l":"co.edu.unbosque.view"}];updateSearchResults();
