@@ -7,7 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ContactoTrabajo implements Serializable {
@@ -35,7 +37,7 @@ public class ContactoTrabajo implements Serializable {
         if (agenda == null) {
             agenda = new AgendaTrabajo();
         }
-        String[] paisesValidos = {"Colombia", "Venezuela", "México", "Argentina", "Chile", "Perú"};
+        String[] paisesValidos = {"Colombia", "Venezuela", "Mexico", "Argentina", "Chile", "Peru"};
         if (Arrays.asList(paisesValidos).contains(paisTrabajo)) {
             if (agenda.getContactosTrabajo().size() < 20) {
                 ContactoTrabajo nuevoContacto = new ContactoTrabajo(nombreTrabajo, nombreEmpresa, telefonoTrabajo, correoTrabajo, paisTrabajo);
@@ -70,14 +72,40 @@ public class ContactoTrabajo implements Serializable {
         } else {
             List<ContactoTrabajo> contactos = agenda.getContactosTrabajo();
             int cantidadContactos = contactos.size();
-            double porcentajeContactos = ((double) cantidadContactos / 15) * 100;
-            for (int i = 0; i < cantidadContactos; i++) {
-                System.out.println((i + 1) + ". " + contactos.get(i).toString());
+            double porcentajeContactos = ((double) cantidadContactos / 20) * 100;
+    
+            // Agregar conteo por país
+            Map<String, Integer> conteoPorPais = new HashMap<>();
+            for (ContactoTrabajo c : contactos) {
+                String pais = c.getPaisTrabajo();
+                conteoPorPais.put(pais, conteoPorPais.getOrDefault(pais, 0) + 1);
             }
-            System.out.println("Cantidad de contactos: " + cantidadContactos);
+    
+            int countPorPais = conteoPorPais.values().stream().mapToInt(Integer::intValue).sum();
+            Map<String, Integer> countPorEmpresa = new HashMap<>();
+            for (int i = 0; i < cantidadContactos; i++) {
+                ContactoTrabajo contacto = contactos.get(i);
+                String empresa = contacto.getNombreEmpresa();
+                if (empresa != null && !empresa.isEmpty()) {
+                    countPorEmpresa.put(empresa, countPorEmpresa.getOrDefault(empresa, 0) + 1);
+                }
+                System.out.println((i + 1) + ". " + contacto.toString());
+            }
+            System.out.println("Cantidad de contactos: " + cantidadContactos + "/20");
             System.out.println("Porcentaje de contactos agregados: " + porcentajeContactos + "%");
+            System.out.println("Cantidad de contactos por país:");
+            for (String pais : conteoPorPais.keySet()) {
+                System.out.println("- " + pais + ": " + conteoPorPais.get(pais));
+            }
+            System.out.println("Cantidad de contactos por empresa:");
+            for (Map.Entry<String, Integer> entry : countPorEmpresa.entrySet()) {
+                System.out.println("- " + entry.getKey() + ": " + entry.getValue());
+            }
         }
     }
+    
+    
+    
     
     public void editarContactoTrabajo(String nombre, String telefono, String correo, String pais) {
         AgendaTrabajo agenda = leerDeArchivoDataTrabajo();

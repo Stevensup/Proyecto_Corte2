@@ -7,7 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ContactoAmigo implements Serializable {
@@ -68,11 +70,26 @@ public class ContactoAmigo implements Serializable {
             List<ContactoAmigo> contactos = agenda.getContactosAmigos();
             int cantidadContactos = contactos.size();
             double porcentajeContactos = ((double) cantidadContactos / 15) * 100;
+    
+            // Agregar conteo por país
+            Map<String, Integer> conteoPorPais = new HashMap<>();
+            for (ContactoAmigo c : contactos) {
+                String pais = c.getPais();
+                conteoPorPais.put(pais, conteoPorPais.getOrDefault(pais, 0) + 1);
+            }
+    
             for (int i = 0; i < cantidadContactos; i++) {
                 System.out.println((i + 1) + ". " + contactos.get(i).toString());
             }
-            System.out.println("Cantidad de contactos: " + cantidadContactos);
+    
+            System.out.println("Cantidad de contactos: " + cantidadContactos + "/15");
             System.out.println("Porcentaje de contactos agregados: " + porcentajeContactos + "%");
+    
+            // Imprimir conteo por país
+            System.out.println("Conteo por país:");
+            for (String pais : conteoPorPais.keySet()) {
+                System.out.println(pais + ": " + conteoPorPais.get(pais));
+            }
         }
     }
     

@@ -172,18 +172,18 @@ public class Controller {
                     }
                     break;
                 case 4:
-                    System.out.println("Lista de contactos: ");
-                    Camigo.listarContactos();
-                    System.out.println("------------------------------");
-                    System.out.println("Lista de contactos trabajo : ");
-                    Ctrabajo.listarContactosTrabajo();
+                        System.out.println("Lista de contactos: ");
+                        Camigo.listarContactos();
+                        System.out.println("------------------------------");
+                        System.out.println("Lista de contactos trabajo : ");
+                        Ctrabajo.listarContactosTrabajo();
                     break;
                     case 5:
-                    System.out.println("¿Qué tipo de contacto desea eliminar?");
-                    System.out.println("1. Contacto Amigo");
-                    System.out.println("2. Contacto Trabajo");
-                    int opcion = scanner.nextInt();
-                    scanner.nextLine(); // consume the newline character
+                        System.out.println("¿Qué tipo de contacto desea eliminar?");
+                        System.out.println("1. Contacto Amigo");
+                        System.out.println("2. Contacto Trabajo");
+                        int opcion = scanner.nextInt();
+                        scanner.nextLine(); // consume the newline character
                     switch (opcion) {
                         case 1:
                             System.out.print("Ingrese el nombre del contacto a eliminar: ");
