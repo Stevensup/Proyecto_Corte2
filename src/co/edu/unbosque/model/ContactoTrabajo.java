@@ -11,7 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+     * Clase ContactoTrabajo implementa la interfaz "Serializable". Los objetos de esta clase pueden ser serializados o deserializados.
+     */
 public class ContactoTrabajo implements Serializable {
 
     private String nombreTrabajo;
@@ -22,7 +24,13 @@ public class ContactoTrabajo implements Serializable {
     private List<ContactoTrabajo> contactos;
     public static final List<String> paises = Arrays.asList("Colombia", "Venezuela", "Mexico", "Argentina", "Chile", "Peru");
 
-
+/**
+     * Crea un nuevo contacto de trabajo con los parámetros especificados.
+     * @param nombreTrabajo el nombre del contacto de trabajo.
+     * @param nombreEmpresa el nombre de la empresa del contacto de trabajo.
+     * @param telefonoTrabajo el número de teléfono del trabajo del contacto.
+     * @param paisTrabajo el país de trabajo del contacto.
+     */
     public ContactoTrabajo(String nombreTrabajo, String nombreEmpresa,  String telefonoTrabajo, String correoTrabajo, String paisTrabajo) {
         this.nombreTrabajo = nombreTrabajo;
         this.telefonoTrabajo = telefonoTrabajo;
@@ -31,7 +39,13 @@ public class ContactoTrabajo implements Serializable {
         this.nombreEmpresa= nombreEmpresa;
         this.contactos = contactos;
     }
-
+/**
+     * Agrega un nuevo contacto de trabajo a la agenda de amigos.
+     * @param nombreAmigo El nombre del amigo a agregar.
+     * @param telefonoAmigo El número de teléfono amigo a agregar.
+     * @param correoAmigo El correo electrónico amigo a agregar.
+     * @param paisAmigo El país donde vive el amigo a agregar.
+     */
     public void agregarContactoTrabajo(String nombreTrabajo, String nombreEmpresa, String telefonoTrabajo, String correoTrabajo, String paisTrabajo) {
         AgendaTrabajo agenda = leerDeArchivoDataTrabajo();
         if (agenda == null) {
@@ -52,6 +66,12 @@ public class ContactoTrabajo implements Serializable {
         }
     }
     
+ /**
+     * Busca un contacto trabajo en la agenda de amigos por nombre.
+     * @param nombre El nombre del amigo a buscar.
+     * @param right Número a la derecha del arreglo.
+     * @return El objeto ContactoTrabajo que coincide con el nombre buscado, si se encuentra en la agenda. De lo contrario, retorna null.
+     */
 
     public ContactoTrabajo buscarContactoTrabajo(String nombre) {
         AgendaTrabajo agenda = leerDeArchivoDataTrabajo();
@@ -64,9 +84,12 @@ public class ContactoTrabajo implements Serializable {
         }
         return null;
     }
-
+/**
+     * Lista todos los contactos trabajo en la agenda de amigos.
+     */
     public void listarContactosTrabajo() {
         AgendaTrabajo agenda = leerDeArchivoDataTrabajo();
+      // Si se puede leer la agenda
         if (agenda == null || agenda.getContactosTrabajo().isEmpty()) {
             System.out.println("No hay contactos en la agenda trabajo.");
         } else {
@@ -105,8 +128,14 @@ public class ContactoTrabajo implements Serializable {
     }
     
     
-    
-    
+/**
+     * Edita el contacto trabajo con el nombre especificado.
+     * @param nombre El nombre del contacto trabajo a editar.
+     * @param telefono El nuevo número de teléfono del contacto trabajo.
+     * @param correo El nuevo correo electrónico del contacto trabajo.
+     * @param pais El nuevo país del contacto trabajo.
+     */
+   
     public void editarContactoTrabajo(String nombre, String telefono, String correo, String pais) {
         AgendaTrabajo agenda = leerDeArchivoDataTrabajo();
         if (agenda != null && agenda.getContactosTrabajo() != null) {
@@ -145,7 +174,10 @@ public class ContactoTrabajo implements Serializable {
         return false;
     }
 
-
+/**
+     * Lee la lista de contactos de trabajo del archivo amigos.data y la devuelve como un objeto de tipo AgendaTrabajo.
+     * @return La lista de contactos de trabajp almacenada en el archivo amigos.data como un objeto de tipo AgendaTrabajo, o null si no se pudo leer.
+     */
     public AgendaTrabajo leerDeArchivoDataTrabajo() {
         AgendaTrabajo agenda = null;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("trabajo.data"))) {
@@ -155,7 +187,10 @@ public class ContactoTrabajo implements Serializable {
         }
         return agenda;
     }
-    
+    /**
+     * Guarda la lista de contactos de trabajo en el archivo amigos.data.
+     * @param agenda La lista de contacto de trabajo a guardar en el archivo.
+     */
     public void guardarEnArchivoDatTrabajo(AgendaTrabajo agenda) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("trabajo.data"))) {
             oos.writeObject(agenda);
