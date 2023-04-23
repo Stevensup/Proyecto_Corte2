@@ -11,7 +11,10 @@ public class Controller {
     private Scanner scanner;
     private ContactoAmigo Camigo;
     private ContactoTrabajo Ctrabajo;
-
+/**
+      * Constructor de la clase Controller, inicializa los modelos a utilizar.
+      */
+	
     public Controller() {
         scanner = new Scanner(System.in);
         Camigo = new ContactoAmigo(null, null, null, null);
@@ -35,7 +38,10 @@ public class Controller {
             System.out.print("-------------------Ingrese la opcion: ");
             option = scanner.nextInt();
             scanner.nextLine(); // consumir el salto de línea pendiente
-    
+    /**
+	 * Ingreso de datos de un contacto amigo.
+	 * @param option La opción seleccionada por el usuario.
+	 */
             switch (option) {
                 case 1:
                     System.out.println("Ingrese los datos del contacto amigo: ");
@@ -86,7 +92,13 @@ public class Controller {
     
                     Camigo.agregarContacto(nombreAmigo, telefonoAmigo, correoAmigo, paisAmigo);
                     break;
-                case 2:
+			
+ /**
+	 * Ingreso de los datos del contacto de trabajo y los valida.
+	 * Si los datos son válidos, se agrega un nuevo contacto de trabajo a Ctrabajo y se persiste la información en un archivo binario.
+	 */
+			    
+                case 2:    
                     System.out.println("Ingrese los datos del contacto de trabajo: ");
                 
                     System.out.print("Nombre: ");
@@ -143,11 +155,15 @@ public class Controller {
                     Ctrabajo.agregarContactoTrabajo(nombreTrabajo, nombreEmpresa, telefonoTrabajo, correoTrabajo, paisTrabajo);
                     // Persistir información en archivo binario
                     break;
-                
+/**
+	 * Método que busca y edita un contacto amigo.
+	 * @param scanner objeto Scanner para recibir entrada del usuario.
+	 * @param Camigo objeto de la clase AgendaAmigos que contiene los contactos amigos
+	 */
                 case 3:
                     System.out.print("Ingrese el nombre del contacto amigo a buscar y editar: ");
                     String nombreBuscar = scanner.nextLine();
-    
+  		 // Buscar el contacto amigo en la AgendaAmigos
                     ContactoAmigo contacto = Camigo.buscarContacto(nombreBuscar);
                     if (contacto == null) {
                         System.out.println("No se encontró ningún contacto amigo con ese nombre.");
@@ -171,6 +187,14 @@ public class Controller {
                         System.out.println("Contacto amigo editado exitosamente.");
                     }
                     break;
+/**
+	 * Método que maneja las opciones del menú principal de la agenda de contactos
+	 * @param option La opción seleccionada por el usuario en el menú principal
+	 * @param scanner El objeto scanner para leer la entrada del usuario.
+	 * @param Camigo El objeto AgendaContactosAmigos para manejar los contactos amigos
+	 * @param Ctrabajo El objeto AgendaContactosTrabajo para manejar los contactos de trabajo
+	 */	 
+			    
                 case 4:
                         System.out.println("Lista de contactos: ");
                         Camigo.listarContactos();
